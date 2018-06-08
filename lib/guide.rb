@@ -3,21 +3,21 @@ class Guide
   VOCABULARIES = "vocabularies"
   PERSONAUTHORITIES = "personauthorities"
 
-  @@authorities = { VOCABULARIES => {}, PERSONAUTHORITIES => {}}
+  @@authorities_cache = {VOCABULARIES => {}, PERSONAUTHORITIES => {}}
 
   def initialize(path=nil)
     #
     # Do nothing yet
-    # 
+    #
   end
 
   def launch!
     populate_authorities_cache
 
-    puts @@authorities
+    puts @@authorities_cache
     puts "############################"
 
-    @@authorities.each do |authority_type, authority_map|
+    @@authorities_cache.each do |authority_type, authority_map|
       puts authority_type
       authority_map.each do |authority_id, term_map|
         puts "    " + authority_id
@@ -79,7 +79,7 @@ class Guide
   end
 
   def lookup_authority_term_id(authority_type, authority_id, display_name)
-    authority_type = @@authorities[authority_type]
+    authority_type = @@authorities_cache[authority_type]
     authority = authority_type[authority_id]
     term_id = authority[display_name.downcase]
   end
@@ -96,11 +96,11 @@ class Guide
   end
 
   def get_vocabularies
-    @@authorities[VOCABULARIES]
+    @@authorities_cache[VOCABULARIES]
   end
 
   def get_personauthorities
-    @@authorities[PERSONAUTHORITIES]
+    @@authorities_cache[PERSONAUTHORITIES]
   end
 
   def get_term_id(vocab_id, term_id)
