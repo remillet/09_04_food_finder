@@ -1,22 +1,41 @@
+require_relative 'MyStaticTest'
+
 class Guide
+
+  def self.populate_authorities_cache
+    languages = {"english" => "eng", "german" => "deu", "finish" => "fsh"}
+    get_vocabularies["languages"] = languages
+
+    prodpersonrole = { "artist" => "art", "engineer" => "eng"}
+    get_vocabularies["prodpersonrole"] = prodpersonrole
+
+    person = { "john muir" => "john_muir", "luke skywalker" => "luke_skywalker"}
+    get_personauthorities["person"] = person
+  end
+
+  def self.get_vocabularies
+    @@authorities_cache[VOCABULARIES]
+  end
+
+  def self.get_personauthorities
+    @@authorities_cache[PERSONAUTHORITIES]
+  end
 
   VOCABULARIES = "vocabularies"
   PERSONAUTHORITIES = "personauthorities"
 
   @@authorities_cache = {VOCABULARIES => {}, PERSONAUTHORITIES => {}}
 
+  a = MyStaticTest.new
+
   def initialize(path=nil)
     #
-    # Do nothing yet
+    # Populated the authority cache with terms
     #
+    self.class.populate_authorities_cache
   end
 
   def launch!
-    populate_authorities_cache
-
-    puts @@authorities_cache
-    puts "############################"
-
     @@authorities_cache.each do |authority_type, authority_map|
       puts authority_type
       authority_map.each do |authority_id, term_map|
@@ -84,27 +103,6 @@ class Guide
     term_id = authority[display_name.downcase]
   end
 
-  def populate_authorities_cache
-    languages = {"english" => "eng", "german" => "deu", "finish" => "fsh"}
-    get_vocabularies["languages"] = languages
 
-    prodpersonrole = { "artist" => "art", "engineer" => "eng"}
-    get_vocabularies["prodpersonrole"] = prodpersonrole
 
-    person = { "john muir" => "john_muir", "luke skywalker" => "luke_skywalker"}
-    get_personauthorities["person"] = person
-  end
-
-  def get_vocabularies
-    @@authorities_cache[VOCABULARIES]
-  end
-
-  def get_personauthorities
-    @@authorities_cache[PERSONAUTHORITIES]
-  end
-
-  def get_term_id(vocab_id, term_id)
-
-  end
-	
 end
