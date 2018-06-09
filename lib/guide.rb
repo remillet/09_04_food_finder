@@ -25,14 +25,12 @@ class Guide
   PERSONAUTHORITIES = "personauthorities"
 
   @@authorities_cache = {VOCABULARIES => {}, PERSONAUTHORITIES => {}}
-
-  a = MyStaticTest.new
+  populate_authorities_cache
 
   def initialize(path=nil)
     #
     # Populated the authority cache with terms
     #
-    self.class.populate_authorities_cache
   end
 
   def launch!
